@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 TAB_TYPE_DICT = {
         "tab": 200,
-        "chord": 300
+        "chords": 300
 }
 
 def build_search_url(song_name, artist_name, tab_type):
@@ -28,7 +28,6 @@ def get_tab_page_url(search_url, tab_type):
                 try:
                         if tab_link.find(class_="_2amQf _2Fdo4").text.strip() == tab_type:
                                 return tab_link.find_all('a')[0].get('href')
-                                break
                 except:
                         pass
 
@@ -38,8 +37,8 @@ def scrape_tab_html(tab_page_url):
         resp = HTMLSession().get(tab_page_url)
         resp.html.render(timeout=20)
         soup = BeautifulSoup(resp.html.html, "html.parser")     # Moves entire HTML file into soup
-        soup = soup.find(class_="_3cXAr _1G5k-")                # Cuts down to section where all tab results are listed
-        print(soup.prettify())
+        soup = soup.find(class_="_3cXAr _1G5k-")                # Cuts down to HTML of the tab
+        return soup.prettify()
 
 
 def get_tab(song_name, artist_name, tab_type='chords'):
@@ -57,6 +56,7 @@ def get_tab(song_name, artist_name, tab_type='chords'):
         tab_page_url = get_tab_page_url(search_url, tab_type)
         if tab_page_url == False:
                 return False
+
         return scrape_tab_html(tab_page_url)
 
 
@@ -90,6 +90,9 @@ def respond():
 if __name__ == '__main__':
     # Threaded option to enable multiple instances for multiple user access support
     app.run(port=5000)
+
+# Example call
+print(get_tab("Sweet Creature", "Harry Styles", "chords"))
 
 
 """
