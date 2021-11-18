@@ -103,9 +103,10 @@ def get_tab(song_name, artist_name):
 def home():
         return "Ultimate Guitar Scraper"
 
-@cross_origin()
+
 @app.route('/gettab/', methods=['GET'])
 def respond():
+        
         # Retrieve the name from url parameter
         artist_name = request.args.get("artist_name", None)
         song_name = request.args.get("song_name", None)
@@ -127,7 +128,9 @@ def respond():
                         response["TAB"] = tab
 
         # Return the response in json format
-        return jsonify(response)
+        response = jsonify(response)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 
 if __name__ == '__main__':
