@@ -11,9 +11,11 @@ def build_chord(chord):
 def get_chord_type(unparsed_html, index):
         characters_in_chord = 10
         chord_type = unparsed_html[index+4]
-        if unparsed_html[index+5] != "[":
-                chord_type += unparsed_html[index+5]
+        index = index + 5
+        while unparsed_html[index] != "[":
+                chord_type += unparsed_html[index]
                 characters_in_chord += 1
+                index += 1
         return chord_type, characters_in_chord
 
 
