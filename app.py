@@ -1,9 +1,11 @@
 import requests, json
 from bs4 import BeautifulSoup
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 
-
+cors = CORS(app)
 def build_chord(chord):
         return f'<span class="_3PpPJ OrSDI" data-name="{chord}" style="color: rgb(0, 0, 0);">{chord}</span>'
 
@@ -95,9 +97,14 @@ def get_tab(song_name, artist_name):
 
         return scrape_tab_html(tab_page_url)
 
+@app.route("/", methods=["GET"])
+def home():
+        return "Ultimate Guitar Scraper"
+
 
 @app.route('/gettab/', methods=['GET'])
 def respond():
+        
         # Retrieve the name from url parameter
         artist_name = request.args.get("artist_name", None)
         song_name = request.args.get("song_name", None)
@@ -119,7 +126,9 @@ def respond():
                         response["TAB"] = tab
 
         # Return the response in json format
-        return jsonify(response)
+        response = jsonify(response)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 
 if __name__ == '__main__':
