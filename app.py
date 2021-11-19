@@ -97,7 +97,7 @@ def get_tab(song_name, artist_name):
         if tab_page_url == False:
                 return False
 
-        return scrape_tab_html(tab_page_url)
+        return scrape_tab_html(tab_page_url), tab_page_url
 
 @app.route("/", methods=["GET"])
 def home():
@@ -121,11 +121,12 @@ def respond():
                 response["ERROR"] = "song name not included."
         # When a valid request is made
         else:
-                tab = get_tab(artist_name, song_name)
+                tab, url = get_tab(artist_name, song_name)
                 if tab == False:
-                        response["ERROR"] = "no tab found."
+                        response["TAB"] = "Tab not found."
                 else:
                         response["TAB"] = tab
+                        response["URL"] = url
 
         # Return the response in json format
         response = jsonify(response)
