@@ -6,8 +6,6 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 
 cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
-
 def build_chord(chord):
         return f'<span class="_3PpPJ OrSDI" data-name="{chord}" style="color: rgb(0, 0, 0);">{chord}</span>'
 
