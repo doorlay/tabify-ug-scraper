@@ -95,7 +95,7 @@ def get_tab(song_name, artist_name):
         search_url = build_search_url(song_name, artist_name)
         tab_page_url = get_tab_page_url(search_url)
         if tab_page_url == False:
-                return False
+                return False, False
 
         return scrape_tab_html(tab_page_url), tab_page_url
 
