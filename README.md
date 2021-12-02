@@ -1,2 +1,2 @@
 # tabify-ug-scraper
-A Flask API endpoint that scrapes guitar tabs from Ultimate-Guitar.com.
+A Flask API that scrapes guitar tabs from Ultimate-Guitar.com.
